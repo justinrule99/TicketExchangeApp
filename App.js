@@ -36,9 +36,14 @@ const App = () => {
                   screenOptions={{
                       tabBarActiveTintColor: '#C8102E',
                   }}
+                  tabBarOptions={{
+                      style: {
+                          backgroundColor: '#F2F2F2',
+                      }
+                  }}
               >
                   <Tab.Screen
-                      name="MainHome"
+                      name="Main"
                       component={HomeContainer}
                       options={{
                           tabBarIcon: () => (
@@ -69,5 +74,7 @@ const App = () => {
       </MyContext.Provider>
     );
 }
+
+
 
 export default App;

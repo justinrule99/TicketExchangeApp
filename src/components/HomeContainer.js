@@ -17,9 +17,33 @@ const HomeContainer = () => {
 
     return (
         <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Homepage" component={HomeSignedIn} />
-            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{
+                    headerStyle: {
+                        backgroundColor: '#F3C65F',
+                    }
+                }}
+            />
+            <Stack.Screen
+                name="Events"
+                component={HomeSignedIn}
+                options={{
+                    headerStyle: {
+                        backgroundColor: '#F3C65F',
+                    }
+                }}
+            />
+            <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{
+                    headerStyle: {
+                        backgroundColor: '#F3C65F',
+                    }
+                }}
+            />
             <Stack.Screen name="SignUp" component={SignUp} />
         </Stack.Navigator>
     );

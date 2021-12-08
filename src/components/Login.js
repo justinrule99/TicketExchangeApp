@@ -53,20 +53,16 @@ const Login = ({navigation}) => {
             // this resets the stack to Homepage, removes login screen
             navigation.dispatch(CommonActions.reset({
                 index: 0,
-                routes: [{name: 'Homepage'}]
+                routes: [{name: 'Events'}]
             }));
 
         } catch (e) {
             // set error state on form
             console.log('the error:');
             console.log(e);
-            setError('Error: Invalid Email or Password');
+            // setError('Error: Invalid Email or Password');
+            // return;
         }
-
-        // response is undefined on error here
-        console.log('LOGIN')
-        console.log(JSON.stringify(response, null, 2));
-
     }
 
     return (
