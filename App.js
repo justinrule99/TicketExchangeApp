@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
@@ -22,7 +21,8 @@ const App = () => {
     let [appState, setAppState] = useState({
         signedIn: false,
         user: {
-            email: ''
+            email: '',
+            id: -1
         },
         num: 4
     });
@@ -36,9 +36,14 @@ const App = () => {
                   screenOptions={{
                       tabBarActiveTintColor: '#C8102E',
                   }}
+                  tabBarOptions={{
+                      style: {
+                          backgroundColor: '#F2F2F2',
+                      }
+                  }}
               >
                   <Tab.Screen
-                      name="MainHome"
+                      name="Main"
                       component={HomeContainer}
                       options={{
                           tabBarIcon: () => (
