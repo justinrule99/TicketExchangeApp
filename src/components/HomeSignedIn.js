@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Text, View} from "react-native";
 import MyContext from "./MyContext";
 import {styles} from "../styles/LoginStyles";
@@ -6,6 +6,8 @@ import {SearchBar} from "react-native-elements";
 import EventCard from "./EventCard";
 import axios from "axios";
 import {NGROK_URL} from "../utils";
+import {FlatList} from "react-native";
+import moment from "moment";
 
 // get tickets based on options
 // list events first, then onclick, enter page that lists tickets
@@ -13,30 +15,48 @@ import {NGROK_URL} from "../utils";
 
 // flatlist data is an array of objects
 
-const HomeSignedIn = async () => {
+const HomeSignedIn = ({navigation}) => {
 
     const {appState, setAppState} = useContext(MyContext);
     const [search, setSearch] = useState('');
+    const [events, setEvents] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
 
-    const updateSearch = (search) => {
-        setSearch(search);
+    const updateSearch = (searchVal) => {
+        setSearch(searchVal);
+        const lower = searchVal.toLowerCase().trim();
+
+        const filteredEvents = events.filter((evt) => {
+            return evt.opponent.toLowerCase().match(lower);
+        });
+
+        setSearchResults(filteredEvents.sort((a,b) => moment(a.date) - moment(b.date)));
     }
 
     let response;
 
-    // try {
-    //     response = await axios.get(`${NGROK_URL}/events`);
-    //
-    // } catch (e) {
-    //     // set error state on form
-    //     console.log('the error:');
-    //     console.log(e);
-    // }
+    useEffect(() => {
+        const fetchStuff = async () => {
+            try {
+                response = await axios.get(`${NGROK_URL}/events`);
+                setEvents(response.data);
+                setSearchResults(response.data.sort((a,b) => moment(a.date) - moment(b.date)));
+            } catch (e) {
+                console.log('the error:');
+                console.log(e);
+            }
+        }
 
-    // console.log(JSON.stringify(response.data, null, 2));
+        fetchStuff();
+
+    }, []);
+
+    const renderItem = ({item}) => {
+        return <EventCard event={item} navigation={navigation}/>
+    }
 
     return (
-        <View style={styles.container}>
+        <View style={styles.eventViewContainer}>
             <SearchBar
                 placeholder="Search"
                 onChangeText={updateSearch}
@@ -46,11 +66,11 @@ const HomeSignedIn = async () => {
                 lightTheme={true}
             />
 
-            <Text>{'Home Signed In Page'}</Text>
-            {/*<Text>{appState.num}</Text>*/}
-            {/*<Text>{appState.user.email}</Text>*/}
-            {/*<EventCard />*/}
-            {/*<EventCard />*/}
+            <FlatList
+                data={searchResults}
+                renderItem={renderItem}
+                keyExtractor={item => item.id.toString()}
+            />
         </View>
     );
 }

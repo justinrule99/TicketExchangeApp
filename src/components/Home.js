@@ -1,31 +1,12 @@
 import React, {useState} from 'react';
 import {Button, Image, Text, View} from 'react-native';
-import { SearchBar } from 'react-native-elements';
-import styled from 'styled-components'
 import StyledText from "./custom-ui/StyledText";
-import StyledButton from "./custom-ui/StyledButton";
 import StyledPressable from "./custom-ui/StyledPressable";
 import { useNavigation } from '@react-navigation/native';
 import isuLogo from '../../assets/icons/tlogo.png';
 import Login from './Login';
 import SignUp from './SignUp';
-
-const MainView = styled.SafeAreaView`
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: #F3C65F;
-`;
-
-const HeaderContainer = styled.View`
-    align-items: center;
-    margin-top: 100px;
-    margin-bottom: 70px;
-`
-
-const ButtonContainer = styled.View`
-    width: 75%;
-`
+import {styles} from "../styles/HomeStyles.js";
 
 
 const Home = ({navigation}) => {
@@ -41,8 +22,8 @@ const Home = ({navigation}) => {
     }
 
     return (
-        <MainView>
-            <HeaderContainer>
+        <View style={styles.mainView}>
+            <View style={styles.headerContainer}>
                 <Image
                     source={isuLogo}
                     style={{
@@ -51,8 +32,8 @@ const Home = ({navigation}) => {
                     }}
                 />
                 <StyledText style={{color: 'black', fontSize: 48, fontWeight: 'bold' }}>{"Ticket Exchange"}</StyledText>
-            </HeaderContainer>
-            <ButtonContainer>
+            </View>
+            <View style={styles.buttonContainer}>
                 <StyledPressable
                     title="Log In"
                     onPress={handleLogin}
@@ -61,9 +42,9 @@ const Home = ({navigation}) => {
                     title="Sign Up"
                     onPress={handleSignUp}
                 />
-            </ButtonContainer>
+            </View>
 
-        </MainView>
+        </View>
 
     );
 }

@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
@@ -22,7 +21,8 @@ const App = () => {
     let [appState, setAppState] = useState({
         signedIn: false,
         user: {
-            email: ''
+            email: '',
+            id: -1
         },
         num: 4
     });
@@ -74,7 +74,5 @@ const App = () => {
       </MyContext.Provider>
     );
 }
-
-
 
 export default App;
